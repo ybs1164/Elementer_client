@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import Login from './components/Login';
+import RoomList from './components/RoomList';
+import Game from './components/Game';
+import background from './background.png';
 
 function App() {
+  const [gameScene, changeScene] = useState(0); // gameScene = 0: Login, 1: RoomList, 2: Game
+
+  const nextScene = () => {
+    changeScene(gameScene + 1);
+  }
+
+  useEffect(() => {
+    //console.log("hello, there?");
+  }, [gameScene]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{
+      backgroundSize: "cover",
+      backgroundImage: `url(${background})` }}>
+        {(gameScene == 0)? (<Login changeScene={nextScene}/>):(
+         (gameScene == 1)? (<RoomList changeScene={nextScene}/>):(<Game />))}
     </div>
   );
 }
